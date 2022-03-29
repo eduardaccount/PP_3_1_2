@@ -23,7 +23,7 @@ public class User implements UserDetails {
     private String userEmail;
     @Column(name = "user_age")
     private byte userAge;
-    @ManyToMany(fetch = FetchType.EAGER)
+    @ManyToMany(fetch = FetchType.LAZY)
     private Set<Role> roles;
 
     public User() {
