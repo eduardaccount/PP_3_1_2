@@ -120,4 +120,30 @@ public class User implements UserDetails {
     public boolean isEnabled() {
         return true;
     }
+    
+        @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        User user = (User) o;
+
+        if (userId != user.userId) return false;
+        if (userAge != user.userAge) return false;
+        if (!userName.equals(user.userName)) return false;
+        if (!userPassword.equals(user.userPassword)) return false;
+        if (!Objects.equals(userEmail, user.userEmail)) return false;
+        return roles.equals(user.roles);
+    }
+
+    @Override
+    public int hashCode() {
+        int result = (int) (userId ^ (userId >>> 32));
+        result = 31 * result + userName.hashCode();
+        result = 31 * result + userPassword.hashCode();
+        result = 31 * result + (userEmail != null ? userEmail.hashCode() : 0);
+        result = 31 * result + (int) userAge;
+        result = 31 * result + roles.hashCode();
+        return result;
+    }
 }
