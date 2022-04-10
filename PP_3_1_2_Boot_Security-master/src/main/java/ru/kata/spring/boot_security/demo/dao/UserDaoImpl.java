@@ -3,8 +3,8 @@ package ru.kata.spring.boot_security.demo.dao;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import ru.kata.spring.boot_security.demo.model.User;
-
 import javax.persistence.EntityManager;
+import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
 import java.util.List;
 
@@ -27,6 +27,8 @@ public class UserDaoImpl implements UserDao {
     @Override
     public void deleteUser(long id) {
         entityManager.remove(getUserById(id));
+        entityManager.flush();
+        entityManager.clear();
     }
 
     @Override
@@ -44,5 +46,18 @@ public class UserDaoImpl implements UserDao {
     @Override
     public User getUserById(long id) {
        return entityManager.find(User.class, id);
+    }
+
+    @Override
+    public User findByUsername(String userName) {
+        User user;
+        try {
+            user = entityManager.createQuery("SELECT user FROM User user WHERE user.userName = :userName", User.class)
+                    .setParameter("userName", userName)
+                    .getSingleResult();
+        } catch (NoResultException e) {
+            return null;
+        }
+        return user;
     }
 }

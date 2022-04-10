@@ -14,14 +14,16 @@
     <th scope="col">Password</th>
     <th scope="col">Email</th>
     <th scope="col">Age</th>
+    <th scope="col">Roles</th>
   </tr>
   </thead>
   <tbody>
   <tr th:each="user: ${people}">
-    <td th:text="${user.getUsername()}"></td>
+    <td th:text="${user.getUserName()}"></td>
     <td th:text="${user.getUserPassword()}"></td>
     <td th:text="${user.getUserEmail()}"></td>
     <td th:text="${user.getUserAge()}"></td>
+    <td th:text="${user.getAuthorities()}"></td>
     <td><a th:href="@{/admin/editPage(id=${user.getUserId()})}">Edit</a></td>
     <td><a th:href="@{/admin/delete(id=${user.getUserId()})}">Delete</a></td>
   </tr>

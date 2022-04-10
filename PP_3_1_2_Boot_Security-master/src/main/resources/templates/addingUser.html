@@ -8,7 +8,7 @@
 <h1>Adding user:</h1>
 <form th:method="POST" th:action="@{/admin/addUser}" th:object="${user}">
   <label for="userName">Enter name: </label>
-  <input type="text" th:field="*{username}" id="userName"/>
+  <input type="text" th:field="*{userName}" id="userName"/>
   <br/>
   <label for="userPassword">Enter password: </label>
   <input type="text" th:field="*{userPassword}" id="userPassword"/>
@@ -18,6 +18,14 @@
   <br/>
   <label for="userEmail">Enter email: </label>
   <input type="text" th:field="*{userEmail}" id="userEmail"/>
+  <br/>
+  <label>Enter role: </label>
+  <select size="2" multiple name="roles"
+          style="width: 210px">
+    <option th:value="ADMIN" th:text="ADMIN">
+    <option th:value="USER" th:text="USER">
+    </option>
+  </select>
   <br/>
   <input type="submit" value="Add"/>
 </form>

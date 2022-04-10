@@ -1,6 +1,7 @@
 package ru.kata.spring.boot_security.demo.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -11,6 +12,7 @@ import ru.kata.spring.boot_security.demo.service.UserService;
 @RequestMapping("/user")
 public class UserController {
 
+
     private final UserService userService;
 
     @Autowired
@@ -19,8 +21,9 @@ public class UserController {
     }
 
     @GetMapping("/index")
+    @PreAuthorize("hasAnyAuthority('ADMIN', 'USER')")
     public String getIndex(Model model) {
-        System.out.println(userService.getAllUsers().size());
+        userService.getAllUsers().forEach(System.out::println);
         model.addAttribute("people", userService.getAllUsers());
         return "userIndex";
     }

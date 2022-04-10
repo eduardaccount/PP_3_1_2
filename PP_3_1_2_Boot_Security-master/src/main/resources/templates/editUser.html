@@ -9,16 +9,24 @@
 <form th:method="POST" th:action="@{/admin/edit}" th:object="${current_user}">
   <input type="hidden" name="userId" th:value='${current_user.getUserId()}'/>
   <label>Enter name: </label>
-  <input type="text" name="userName" th:value="*{getUsername()}"/>
+  <input type="text" name="userName" th:value="*{(getUserName())}"/>
   <br/>
   <label>Enter password: </label>
-  <input type="text" name="password" th:value="*{getUserPassword()}"/>
+  <input type="text" name="userPassword" th:value="*{getUserPassword()}"/>
   <br/>
   <label>Enter age: </label>
   <input type="text" name="userAge" th:value="*{getUserAge()}"/>
   <br/>
   <label>Enter email: </label>
   <input type="text" name="userEmail" th:value="*{getUserEmail()}"/>
+  <br/>
+  <label>Enter roles: </label>
+  <select size="2" multiple name="roles"
+          style="width: 210px">
+    <option th:value="ADMIN" th:text="ADMIN">
+    <option th:value="USER" th:text="USER">
+    </option>
+  </select>
   <br/>
   <input type="submit" value="Save"/>
 </form>

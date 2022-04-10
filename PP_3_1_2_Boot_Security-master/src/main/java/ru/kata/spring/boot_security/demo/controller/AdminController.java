@@ -1,6 +1,7 @@
 package ru.kata.spring.boot_security.demo.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -9,6 +10,7 @@ import ru.kata.spring.boot_security.demo.service.UserService;
 
 @Controller
 @RequestMapping("/admin")
+@PreAuthorize("hasAuthority('ADMIN')")
 public class AdminController {
 
     private final UserService userService;
@@ -20,7 +22,6 @@ public class AdminController {
 
     @GetMapping("/index")
     public String getIndex(Model model) {
-        System.out.println(userService.getAllUsers().size());
         model.addAttribute("people", userService.getAllUsers());
         return "adminIndex";
     }
@@ -35,7 +36,7 @@ public class AdminController {
     public String addUser(@ModelAttribute("user") User user) {
         System.out.println(user);
         userService.addUser(user);
-        return "redirect:/admin/index/";
+        return "redirect:/admin/index";
     }
 
     @GetMapping("/editPage")
@@ -47,13 +48,14 @@ public class AdminController {
 
     @PostMapping("/edit")
     public String editUser(@ModelAttribute("user") User user) {
+        System.out.println(user);
         userService.updateUser(user);
-        return "redirect:/admin/index/";
+        return "redirect:/admin/index";
     }
 
     @GetMapping("/delete")
     public String deleteUser(@RequestParam(value = "id") String id) {
         userService.deleteUser(Long.parseLong(id));
-        return "redirect:/admin/index/";
+        return "redirect:/admin/index";
     }
 }
