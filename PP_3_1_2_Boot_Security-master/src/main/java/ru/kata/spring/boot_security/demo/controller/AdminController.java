@@ -34,7 +34,6 @@ public class AdminController {
 
     @PostMapping("/addUser")
     public String addUser(@ModelAttribute("user") User user) {
-        System.out.println(user);
         userService.addUser(user);
         return "redirect:/admin/index";
     }
@@ -48,7 +47,6 @@ public class AdminController {
 
     @PostMapping("/edit")
     public String editUser(@ModelAttribute("user") User user) {
-        System.out.println(user);
         userService.updateUser(user);
         return "redirect:/admin/index";
     }
